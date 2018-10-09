@@ -76,7 +76,7 @@ DYNAMIC_COLORS_ACTIVE="${DYNAMIC_COLORS_ROOT}/colorscheme"
 
 COLORSCHEMES=
 
-for d in "$(dirname $(realpath $0))/../share/dynamic-colors/colorschemes" /usr/share/dynamic-colors/colorschemes ; do
+for d in "$(dirname $(realpath $0))/../colorschemes" "$(dirname $(realpath $0))/../share/dynamic-colors/colorschemes" /usr/share/dynamic-colors/colorschemes ; do
   if [[ -d $d ]] ; then
     COLORSCHEMES="${d}"
     break
