@@ -73,10 +73,12 @@ color_names=( black red green yellow blue magenta cyan white brblack brred brgre
 # _ROOT is a bad name
 DYNAMIC_COLORS_ROOT="${XDG_CACHE_HOME:-${HOME}/.cache}/dynamic-colors"
 DYNAMIC_COLORS_ACTIVE="${DYNAMIC_COLORS_ROOT}/colorscheme"
+BIN_DIR="$(cd "$(dirname "$0")" && pwd -P)"
 
 COLORSCHEMES=
 
-for d in "$(dirname $(realpath $0))/../colorschemes" "$(dirname $(realpath $0))/../share/dynamic-colors/colorschemes" /usr/share/dynamic-colors/colorschemes ; do
+
+for d in "${BIN_DIR}/../colorschemes" "${BIN_DIR}/../share/dynamic-colors/colorschemes" /usr/share/dynamic-colors/colorschemes ; do
   if [[ -d $d ]] ; then
     COLORSCHEMES="${d}"
     break
