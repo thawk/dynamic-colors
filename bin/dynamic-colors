@@ -25,7 +25,46 @@ die () {
   exit 1
 }
 
-change_color () {
+change_color() {
+    if [[ "${TERM_PROGRAM}" == "iTerm.app" ]] ; then
+        change_color_iterm "$@"
+    else
+        change_color_osc "$@"
+    fi
+}
+
+change_color_iterm () {
+  iterm_color_names=( black red green yellow blue magenta cyan white br_black br_red br_green br_yellow br_blue br_magenta br_cyan br_white )
+
+  # valid keys: fg bg bold link selbg selfg curbg curfg underline tab
+
+  case $1 in
+    color*)
+      iterm_set_colors "${color_names[${1#color}]}" "$2" ;;
+    foreground)
+      iterm_set_colors fg "$2" ;;
+    background)
+      iterm_set_colors curfg "$2"
+      iterm_set_colors bg "$2" ;;
+    cursor)
+      iterm_set_colors curbg "$2" ;;
+    #mouse_foreground)
+    #  send_osc 13 "$2" ;;
+    #mouse_background)
+    #  send_osc 14 "$2" ;;
+    highlight)
+      iterm_set_colors selbg "$2" ;;
+    #border)
+    #  send_osc 708 "$2" ;;
+  esac
+}
+
+iterm_set_colors () {
+  command="${ESC}]1337;SetColors=$1=${2#\#}${BEL}"
+  send_escape_sequence $command
+}
+
+change_color_osc () {
   case $1 in
     color*)
       send_osc 4 "${1#color};$2" ;;
