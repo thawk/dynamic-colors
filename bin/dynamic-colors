@@ -147,13 +147,13 @@ init () {
 
 unset_colors () {
   for color in ${colors[@]}; do
-    unset ${!color}
+    unset ${!color:-}
   done
 }
 
 set_colors () {
   for color in ${colors[@]}; do
-    [[ ${!color} ]] && change_color "$color" "${!color}"
+    [[ ${!color:-} ]] && change_color "$color" "${!color:-}"
   done
 }
 
@@ -173,7 +173,7 @@ audit () {
   load_colorscheme "$1"
   declare -a problems
   for color in ${colors[@]}; do
-    if [[ ! ${!color} ]]; then
+    if [[ ! ${!color:-} ]]; then
       problems=( "${problems[@]}" "\033[4m$color\033[0m is not defined" )
     fi
   done
