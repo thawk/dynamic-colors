@@ -26,7 +26,7 @@ die () {
 }
 
 change_color() {
-    if [[ "${TERM_PROGRAM:-}" == "iTerm.app" ]] ; then
+    if is_in_iterm ; then
         change_color_iterm "$@"
     else
         change_color_osc "$@"
@@ -83,6 +83,21 @@ change_color_osc () {
     border)
       send_osc 708 "$2" ;;
   esac
+}
+
+is_in_tmux() {
+  [[ -n "${TMUX:-""}" ]]
+}
+
+is_in_iterm() {
+  if is_in_tmux ; then
+    term_program="$(tmux showenv TERM_PROGRAM 2> /dev/null)"
+    term_program="${term_program#*TERM_PROGRAM=}"
+  else
+    term_program="${TERM_PROGRAM}"
+  fi
+
+  [[ "${term_program:-}" == "iTerm.app" ]]
 }
 
 send_escape_sequence () {
