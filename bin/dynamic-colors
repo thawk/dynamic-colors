@@ -94,7 +94,7 @@ is_in_iterm() {
     term_program="$(tmux showenv TERM_PROGRAM 2> /dev/null)"
     term_program="${term_program#*TERM_PROGRAM=}"
   else
-    term_program="${TERM_PROGRAM}"
+    term_program="${TERM_PROGRAM:-}"
   fi
 
   [[ "${term_program:-}" == "iTerm.app" ]]
