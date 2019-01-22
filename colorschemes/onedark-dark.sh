@@ -13,7 +13,7 @@
 # | Light Yellow #e5c07b |
 
 background='#282C34'
-cursor='#4868a6'
+cursor='#3E4452'
 foreground='#ABB2BF'
 highlight='#464d5b'
 
