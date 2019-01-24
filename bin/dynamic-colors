@@ -226,10 +226,16 @@ cycle() {
 }
 
 list () {
+  [[ -f "${DYNAMIC_COLORS_ACTIVE}" ]] && colorscheme_name=$(load_colorscheme_name) || colorscheme_name=
+
   [[ ! -d "$COLORSCHEMES" ]] && die "error: colorschemes directory '$COLORSCHEMES' doesn't exist"
   cd "$COLORSCHEMES"
   for file in *.sh; do
-    echo "${file%.sh}"
+    if [[ "${file%.sh}" == "$colorscheme_name" ]]; then
+      echo "*${file%.sh}"
+    else
+      echo " ${file%.sh}"
+    fi
   done
 }
 
